@@ -1,6 +1,8 @@
 package com.arpico.dojoblog.service.impl;
 
 import com.arpico.dojoblog.dto.AdminDto;
+import com.arpico.dojoblog.dto.AuthorDto;
+import com.arpico.dojoblog.dto.ResponseDto;
 import com.arpico.dojoblog.model.Admin;
 import com.arpico.dojoblog.model.Author;
 import com.arpico.dojoblog.model.Role;
@@ -27,12 +29,14 @@ import java.util.List;
  */
 
 @Service
-public class AdminServiceImpl implements AdminService, UserDetailsService {
+public class AdminServiceImpl implements AdminService , UserDetailsService {
 
     @Autowired
     private AdminRepo adminRepo;
     @Autowired
     private RoleRepo roleRepo;
+    @Autowired
+    private AuthorRepo authorRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -84,5 +88,43 @@ public class AdminServiceImpl implements AdminService, UserDetailsService {
             adminList.add(adminDto);
         }
         return adminList;
+    }
+
+    @Override
+    public ResponseDto getAllAuthor() {
+        try {
+            List<Author> allAuthors = authorRepo.findAll();
+            List<AuthorDto> authorList = new ArrayList<>();
+
+            if (allAuthors.isEmpty()) {
+                return new ResponseDto(
+                        false,
+                        "No any registered authors!"
+                );
+            } else {
+                for (Author author : allAuthors) {
+                    AuthorDto authorDto = new AuthorDto();
+
+                    authorDto.setId(author.getId());
+                    authorDto.setName(author.getName());
+                    authorDto.setEmail(author.getEmail());
+                    authorDto.setTelephone(author.getTelephone());
+                    authorDto.setUsername(author.getUsername());
+                    authorDto.setPassword(author.getPassword());
+
+                    authorList.add(authorDto);
+                }
+                return new ResponseDto(
+                        true,
+                        "All Authors are fetched!",
+                        authorList
+                );
+            }
+        } catch (Exception exception) {
+            return new ResponseDto(
+                    false,
+                    "Something went wrong | " + exception
+            );
+        }
     }
 }

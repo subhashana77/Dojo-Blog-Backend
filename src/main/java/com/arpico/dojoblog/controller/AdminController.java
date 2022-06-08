@@ -110,4 +110,10 @@ public class AdminController {
     public ResponseDto deletePost(@RequestParam("id") Long id) {
         return postService.deletePost(id);
     }
+
+    @GetMapping("/admin/all-authors")
+    public ResponseDto getAllAuthor() {
+        return adminService.getAllAuthor();
+    }
+
 }
