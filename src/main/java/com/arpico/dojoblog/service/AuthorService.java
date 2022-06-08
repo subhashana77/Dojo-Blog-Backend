@@ -1,10 +1,7 @@
 package com.arpico.dojoblog.service;
 
 import com.arpico.dojoblog.dto.AuthorDto;
-import com.arpico.dojoblog.dto.PostDto;
 import com.arpico.dojoblog.dto.ResponseDto;
-
-import java.util.List;
 
 /**
  * @author dilshan.r
@@ -12,6 +9,7 @@ import java.util.List;
  * @project dojo-blog
  * @ide IntelliJ IDEA
  */
+
 public interface AuthorService {
     ResponseDto newAuthor(AuthorDto authorDto);
     ResponseDto deleteAuthor(Long id);
