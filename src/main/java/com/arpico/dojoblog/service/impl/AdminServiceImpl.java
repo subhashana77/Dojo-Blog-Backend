@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 @Service
-public class AdminServiceImpl implements AdminService , UserDetailsService {
+public class AdminServiceImpl implements AdminService, UserDetailsService {
 
     @Autowired
     private AdminRepo adminRepo;
